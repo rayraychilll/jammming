@@ -18,8 +18,60 @@ const Spotify = {
       }
     }
     return accessToken;
-  }
-}
-});
+  },
+
+  search(term) {
+    return fetch('https://api.spotify.com/v1/search?type=track&q={term}',
+    {
+       headers: {Authorization: `Bearer ${accessToken}`}
+    }
+  ).then(response => {
+     return response.json();
+   }).then(jsonResponse => {
+    if (jsonResponse.tracks) {
+      return jsonResponse.tracks.items.map(track => ({
+        id: track.id,
+        name: track.name,
+        artist: track.artists[0].name,
+        album: track.album.name,
+        uri: track.uri
+      }));
+    } else {
+        return [];
+    }
+  });
+},
+
+
+//REVIEWING #89-94
+  savePlaylist(playlistName, trackURIs) {
+    if (playlistName && trackURIs) {
+      const accessToken = Spotify.getAccessToken();
+      let headers = {Authorization: `Bearer ${accessToken}`};
+      let userID = '';
+      return fetch('https://api.spotify.com/v1/me',
+    {headers: headers}
+  ).then(response => {
+       return response.json();
+     }).then(jsonResponse => {
+      if (jsonResponse.id) { //not sure if i need 53-55 or just return jsonResponse.id?
+        return jsonResponse.id.map(id => ({
+          id: userID //#92
+        }));
+      }
+    });
+    return fetch('https://api.spotify.com/v1/playlists/{playlist_id}/tracks');
+    }
+     else {
+      return;
+    }
+  }}
+
+
+/*other option
+savePlaylist(name, trackUris) {
+    if (!playlistName || !trackURIs.length) {
+      return;
+    }*/
 
 export default Spotify;
