@@ -43,36 +43,39 @@ const Spotify = {
 },
 
 
-//REVIEWING #89-94
+//#89-94
   savePlaylist(playlistName, trackURIs) {
     if (playlistName && trackURIs) {
       const accessToken = Spotify.getAccessToken();
-      let headers = {Authorization: `Bearer ${accessToken}`};
-      let userID = '';
+      const headers = { Authorization: `Bearer ${accessToken}` };
+      // GET user ID
+      let userID;
       return fetch('https://api.spotify.com/v1/me',
-    {headers: headers}
-  ).then(response => {
-       return response.json();
-     }).then(jsonResponse => {
-      if (jsonResponse.id) {
-        //not sure if i need this or if i should just return jsonResponse.id
-        return jsonResponse.id.map(id => ({
-          id: userID //#92
-        }));
-      }
-    });
-    return fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`);
-    }
-     else {
-      return;
-    }
-  }}
-
-
-/*other option
-savePlaylist(name, trackUris) {
-    if (!playlistName || !trackURIs.length) {
-      return;
-    }*/
+    { headers: headers }
+  ).then(response => response.json()
+).then(jsonResponse => {
+     // POST new playlist to user account
+     userId = jsonResponse.id;
+     return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`,
+     {
+       method: 'POST',
+       headers: headers,
+       body: JSON.stringify({name: name})
+     }).then(response => response.json()
+   ).then(jsonResponse => {
+     //receive playlist ID from request
+             const playlistId = jsonResponse.id;
+             return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks`,
+             {
+               method: 'POST',
+               headers: headers,
+               body: JSON.stringify({uris: trackUris})
+             });
+           });
+        });
+ } else {
+  return;
+  }
+},
 
 export default Spotify;
