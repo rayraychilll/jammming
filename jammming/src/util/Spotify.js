@@ -21,7 +21,7 @@ const Spotify = {
   },
 
   search(term) {
-    return fetch('https://api.spotify.com/v1/search?type=track&q={term}',
+    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`,
     {
        headers: {Authorization: `Bearer ${accessToken}`}
     }
@@ -54,13 +54,14 @@ const Spotify = {
   ).then(response => {
        return response.json();
      }).then(jsonResponse => {
-      if (jsonResponse.id) { //not sure if i need 53-55 or just return jsonResponse.id?
+      if (jsonResponse.id) {
+        //not sure if i need this or if i should just return jsonResponse.id
         return jsonResponse.id.map(id => ({
           id: userID //#92
         }));
       }
     });
-    return fetch('https://api.spotify.com/v1/playlists/{playlist_id}/tracks');
+    return fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`);
     }
      else {
       return;
