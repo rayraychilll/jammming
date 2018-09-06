@@ -91,7 +91,7 @@ search(term) {
           <SearchBar onSearch={this.search}/>
           <div className="App-playlist">
             <SearchResults searchResults ={this.state.searchResults} onAdd={this.addTrack}/>
-            <Playlist playlistName={this.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.state.updatePlaylistName} onSave={this.savePlaylist}/>
+            <Playlist playlistName={this.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onNameChange={this.updatePlaylistName} onSave={this.savePlaylist}/>
           </div>
         </div>
       </div>
