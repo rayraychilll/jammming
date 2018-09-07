@@ -10,22 +10,6 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    /*this.state = {
-      searchResults: [
-        name: 'track.name',
-        artist: 'track.artists[0].name',
-        album: 'track.album.name',
-        id: 'track.id'
-      ],
-     playlistName: 'Dope Playlist',
-     playlistTracks: [
-          name: 'Dance to This',
-          artist: 'Troye Sivan',
-          album: 'Bloom',
-          id: '1NbGcdgwRHZ5rbPIT9hdR3'
-    ]
-  }*/
-
       this.state = {
         searchResults: [],
         playlistName: 'New Playlist',
@@ -79,8 +63,8 @@ search(term) {
   Spotify.search(term).then(tracks => {
     this.setState({
       tracks: tracks
-    })
-  })
+    });
+  });
 }
 
   render() {
