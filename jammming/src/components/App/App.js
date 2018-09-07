@@ -30,6 +30,7 @@ addTrack(track) {
   } else {
       tracks.push(track);
       this.setState({playlistTracks: tracks});
+      return tracks; //return tracks here?
       }
 }
 
@@ -50,6 +51,7 @@ updatePlaylistName(name) {
 
 //REVIEWING #63-64, 89B, 95
 savePlaylist() {
+  console.log(this.state.playlistTracks[0])
   let trackURIs = this.state.playlistTracks.map(track => track.uri);
     Spotify.savePlaylist(this.state.playlistName, trackURIs).then(playlist => { //playlist?
       this.setState({
@@ -62,7 +64,7 @@ savePlaylist() {
 search(term) {
   Spotify.search(term).then(tracks => {
     this.setState({
-      tracks: tracks
+      searchResults: tracks
     });
   });
 }
