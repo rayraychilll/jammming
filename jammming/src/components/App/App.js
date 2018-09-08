@@ -36,12 +36,14 @@ addTrack(track) {
 
 removeTrack(track) {
   let tracks = this.state.playlistTracks;
-  if (tracks.find(savedTrack => savedTrack.id === track.id)) {
-    return;
-  } else {
-      tracks.filter(track);
-      this.setState({playlistTracks: tracks});
-      }
+  tracks = tracks.filter(nextTrack => {
+    if(nextTrack.id === track.id) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+  this.setState({playlistTracks: tracks});
 }
 
 updatePlaylistName(name) {
