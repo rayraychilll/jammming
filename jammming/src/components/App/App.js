@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import './logo.svg';
 import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
@@ -30,7 +30,7 @@ addTrack(track) {
   } else {
       tracks.push(track);
       this.setState({playlistTracks: tracks});
-      return tracks; //return tracks here?
+      return tracks;
       }
 }
 
@@ -55,7 +55,7 @@ updatePlaylistName(name) {
 savePlaylist() {
   console.log(this.state.playlistTracks[0])
   let trackURIs = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(playlist => { //playlist?
+    Spotify.savePlaylist(this.state.playlistName, trackURIs).then(playlist => {
       this.setState({
         playlistName : 'New Playlist',
         playlistTracks: []
